@@ -1,32 +1,30 @@
-name: Python package
+name: Docker Deployment to Heroku
 
-on: [push]
+on:
+  push:
+    branches:
+      - main  # Or any other branch you want to deploy from
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.9"]
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Heroku Container Registry
+        uses: akhileshns/heroku-docker-login@v1
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+
+      - name: Build Docker image
         run: |
-          python -m pip install --upgrade pip
-          pip install flake8 
-          pip install -r requirements.txt
-      - name: run_program
-        run: python app.py
-      - name: deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "wine01" #Must be unique in Heroku
-          heroku_email: "e.casillas6819@student.nu.edu"
-     
+          docker build -t registry.heroku.com/wine01/web .
+
+      - name: Push Docker image to Heroku
+        run: |
+          docker push registry.heroku.com/wine01/web
+
+      - name: Release Docker container on Heroku
+        run: |
+          heroku container:release web -a wine01
