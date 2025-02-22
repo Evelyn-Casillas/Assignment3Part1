@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import numpy as np
 import joblib
-import os #Add this line
+import os  # Added this line
 
 app = Flask(__name__)
 filename = 'LogisticModel.pkl'
@@ -36,7 +36,7 @@ def predict():
 
     return render_template('index.html', predict=str(pred))
 
-#Remove this entire if statement.
-#if __name__ == '__main__':
-#    port = int(os.environ.get('PORT', 5000))
-#    app.run(host="0.0.0.0", port=port, debug=True)
+# Modified for Heroku deployment
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5001)) #Use 5001 or 5000 for local testing. Heroku will override.
+    app.run(host='0.0.0.0', port=port, debug=False) #Debug set to false.
