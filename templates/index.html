@@ -2,17 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Iris Classification</title>
+    <title>Prediction Form</title>
 </head>
 <body>
-    <form action="{{ url_for('predict')}}" method="POST">
-        Sepal-Length:  <input type="number" name="sepal_length"></br>
-        Sepal_Width:   <input type="number" name="sepal_width"></br>
-	Petal_Length:  <input type="number" name="petal_length"></br>
-	Petal_Width:   <input type="number" name="petal_width"></br>
-      
-        <input type=submit value=Submit>
-   </form>
-    My final prediction: {{ predict }}
+    <h1>Enter Features for Prediction</h1>
+    <form action="{{ url_for('predict') }}" method="POST">
+        Feature 1: <input type="number" name="feature1" step="any" required><br>
+        Feature 2: <input type="number" name="feature2" step="any" required><br>
+        Feature 3: <input type="number" name="feature3" step="any" required><br>
+        Feature 4: <input type="number" name="feature4" step="any" required><br>
+        Feature 5: <input type="number" name="feature5" step="any" required><br>
+        Feature 6: <input type="number" name="feature6" step="any" required><br>
+        Feature 7: <input type="number" name="feature7" step="any" required><br>
+        Feature 8: <input type="number" name="feature8" step="any" required><br>
+        Feature 9: <input type="number" name="feature9" step="any" required><br>
+        Feature 10: <input type="number" name="feature10" step="any" required><br>
+        Feature 11: <input type="number" name="feature11" step="any" required><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Prediction Result: {{ predict }}</h2>
 </body>
 </html>
